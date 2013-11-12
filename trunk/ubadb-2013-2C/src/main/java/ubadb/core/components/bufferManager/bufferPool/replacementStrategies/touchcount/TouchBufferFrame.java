@@ -4,9 +4,9 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.common.Page;
 import ubadb.core.exceptions.BufferFrameException;
 
-public class TouchBufferFrame extends BufferFrame {
+public class TouchBufferFrame extends BufferFrame implements Comparable<TouchBufferFrame>{
         
-		public int count;
+		public Integer count;
 	
         public TouchBufferFrame(Page page) {
                 super(page);
@@ -22,5 +22,10 @@ public class TouchBufferFrame extends BufferFrame {
         	super.unpin();
         	count++;
         }
+
+		@Override
+		public int compareTo(TouchBufferFrame arg0) {
+			return count.compareTo(((TouchBufferFrame)arg0).count);
+		}
 
 }
