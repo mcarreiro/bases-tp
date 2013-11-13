@@ -1,9 +1,7 @@
 package ubadb.core.components.bufferManager.bufferPool.replacementStrategies.touchcount;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 
 import ubadb.core.common.Page;
 import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
@@ -12,12 +10,11 @@ import ubadb.core.exceptions.PageReplacementStrategyException;
 
 public class TouchCountReplacementStrategy implements PageReplacementStrategy {
 
-		private Collection<TouchBufferFrame> cold;
-		private Collection<TouchBufferFrame> hot;
+		private LinkedList<TouchBufferFrame> cold;
+		private LinkedList<TouchBufferFrame> hot;
 	
         public BufferFrame findVictim(Collection<BufferFrame> bufferFrames) throws PageReplacementStrategyException {
-        		hotNCold(bufferFrames); //Armar Hot N Cold, con mitad y mitad ordenado por Touch Count
-        		
+       		
         		hotNColdMovement(); // Mover según parámetro del paper
         		
         		TouchBufferFrame victim = firstColdFrame();
@@ -25,29 +22,16 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         }
 
         
-        private void hotNCold(Collection<BufferFrame> bufferFrames){
-        	int halfSizeCollection = bufferFrames.size()/2;
-        	
-//        	List<? extends BufferFrame> listBufferFrames = new ArrayList<? extends BufferFrame >(bufferFrames); // NO ANDA, IGUAL LO DEJO
-        	
-        	List<TouchBufferFrame> listBufferFrames = toListTouchable(bufferFrames);
-        	
-        	Collections.sort(listBufferFrames);
-        	
-        	for (TouchBufferFrame bufferFrame : listBufferFrames) {
-        		if (hot.size() != halfSizeCollection){
-        			hot.add(bufferFrame);
-        		}else{
-        			cold.add(bufferFrame);
-        		}
-            }
-        }
-        
         //Devuelvo el primer COLD Frame reemplazable
         private TouchBufferFrame firstColdFrame() throws PageReplacementStrategyException{
         	for (TouchBufferFrame bufferFrame : cold) {
         		if (bufferFrame.canBeReplaced()){
         			cold.remove(bufferFrame);
+        			
+        			if(Math.abs(cold.size() - hot.size())>0){ //Si HOT es más grande
+        				cold.addLast(hot.removeLast()); //Mantener balanceo
+        			}//Si no, es que son iguales
+        			
         			return bufferFrame;
         		}
         	}
@@ -57,27 +41,29 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         //Una vez que tengamos cold y hoy, pasar de cold a hot según parámetro del paper
         private void hotNColdMovement(){
         	for(TouchBufferFrame bufferFrame : cold){
-        		if(bufferFrame.count > 2){ // Dato del paper el 2
+        		if(bufferFrame.count > 2 ){ // Dato del paper
         			bufferFrame.count = 0; //Se tiene que resetear
-        			hot.add(bufferFrame);
+        			hot.addFirst(bufferFrame);
         			cold.remove(bufferFrame);
+        			cold.addLast(hot.removeLast()); //Mantener balanceo
         		}
         	}
+        	
         }
         
-        
-        //Pasar a lista para poder ordenarla
-        private List<TouchBufferFrame> toListTouchable(Collection<BufferFrame> bufferFrames){
-        	List<TouchBufferFrame> result = new ArrayList<TouchBufferFrame>();
-        	for (BufferFrame bufferFrame : bufferFrames) {
-        		result.add((TouchBufferFrame) bufferFrame);
-        	}
-        	return result;
-        }
 
         public BufferFrame createNewFrame(Page page) {
-                
-        	return new TouchBufferFrame(page);    
+        	TouchBufferFrame bufferFrame = new TouchBufferFrame(page);
+        	
+        	cold.addFirst(bufferFrame);
+        	
+        	if (cold.size() >= 2){ //Mantener balanceo, máxima diferencia 1
+        		TouchBufferFrame coldToHodFrame = cold.pop();
+        		hot.addLast(coldToHodFrame);
+        	}
+        	
+        	return bufferFrame;     
+        	
         }
         
         public String toString() {
