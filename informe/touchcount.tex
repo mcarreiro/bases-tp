@@ -1,0 +1,140 @@
+\section{Touch Count}
+
+\subsection{Descripción}
+El algoritmo que utiliza Oracle para manejar las páginas del Buffer Pool es conocido
+como “Touch Count” y es una variante del popular LRU.
+
+\subsubsection{Hot N Cold}
+
+\subsubsection{Incremento Touch Count}
+
+\subsubsection{Hot N Cold Movement}
+
+\subsection{Implementación}
+\subsubsection{Touch Count Buffer Frame}
+
+\begin{lstlisting}
+package ubadb.core.components.bufferManager.bufferPool.replacementStrategies.touchcount;
+
+import java.util.Date;
+
+import ubadb.core.common.Page;
+import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
+import ubadb.core.exceptions.BufferFrameException;
+
+public class TouchBufferFrame extends BufferFrame implements Comparable<TouchBufferFrame>{
+        
+		public Integer count;
+		public Date lastTouch;
+	
+        public TouchBufferFrame(Page page) {
+                super(page);
+                count = 0;
+                lastTouch = new Date();
+        }
+        
+        public void pin(){
+        	super.pin();
+        	increaseCount();
+        }
+        
+        public void unpin() throws BufferFrameException{
+        	super.unpin();
+        	increaseCount();
+        }
+        
+        public void increaseCount(){
+        	Date now = new Date();
+        	
+        	@SuppressWarnings("unused")
+			long difference = (long) ((now.getTime() - lastTouch.getTime())/1000);
+        	
+        	if((now.getTime() - lastTouch.getTime())/1000 >= 3){
+        		count++;
+        		lastTouch = new Date();
+        	}
+        }
+
+		@Override
+		public int compareTo(TouchBufferFrame arg0) {
+			return count.compareTo(((TouchBufferFrame)arg0).count);
+		}
+
+}
+\end{lstlisting}
+
+\subsubsection{Touch Count Buffer Frame Strategy}
+
+\begin{lstlisting}
+package ubadb.core.components.bufferManager.bufferPool.replacementStrategies.touchcount;
+
+import java.util.Collection;
+import java.util.LinkedList;
+
+import ubadb.core.common.Page;
+import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
+import ubadb.core.components.bufferManager.bufferPool.
+	replacementStrategies.PageReplacementStrategy;
+import ubadb.core.exceptions.PageReplacementStrategyException;
+
+public class TouchCountReplacementStrategy implements PageReplacementStrategy {
+
+		private LinkedList<TouchBufferFrame> cold;
+		private LinkedList<TouchBufferFrame> hot;
+	
+        public BufferFrame findVictim(Collection<BufferFrame> bufferFrames) throws PageReplacementStrategyException {
+       		
+        		hotNColdMovement();
+        		
+        		TouchBufferFrame victim = firstColdFrame();
+                return victim;
+        }
+        
+        private TouchBufferFrame firstColdFrame() throws PageReplacementStrategyException{
+        	for (TouchBufferFrame bufferFrame : cold) {
+        		if (bufferFrame.canBeReplaced()){
+        			cold.remove(bufferFrame);
+        			
+        			if(Math.abs(cold.size() - hot.size())>0){ 
+        				cold.addLast(hot.removeLast());
+        			}
+        			
+        			return bufferFrame;
+        		}
+        	}
+        	throw new PageReplacementStrategyException("No hay Cold Buffer reemplazable");
+        }
+        
+        private void hotNColdMovement(){
+        	for(TouchBufferFrame bufferFrame : cold){
+        		if(bufferFrame.count > 2 ){ 
+        			bufferFrame.count = 0;
+        			hot.addFirst(bufferFrame);
+        			cold.remove(bufferFrame);
+        			cold.addLast(hot.removeLast()); 
+        		}
+        	}
+        	
+        }
+        
+
+        public BufferFrame createNewFrame(Page page) {
+        	TouchBufferFrame bufferFrame = new TouchBufferFrame(page);
+        	
+        	cold.addFirst(bufferFrame);
+        	
+        	if (cold.size() >= 2){ 
+        		TouchBufferFrame coldToHodFrame = cold.pop();
+        		hot.addLast(coldToHodFrame);
+        	}
+        	
+        	return bufferFrame;     
+        	
+        }
+        
+        public String toString() {
+                return "Touch Count Replacement Strategy";
+        }
+        
+}
+\end{lstlisting}

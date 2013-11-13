@@ -1,0 +1,54 @@
+\documentclass[a4paper,titlepage,10pt]{article}
+
+\usepackage[margin=0.6in]{geometry} % margenes
+\usepackage[spanish]{babel} % Le indicamos a LaTeX que vamos a escribir en español.
+\usepackage[utf8]{inputenc} % Quiero acentos
+\usepackage{caratula}
+\usepackage{listings} % Java Typeset
+\usepackage{color} % Para definir color
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+}
+
+\titulo{Trabajo Práctico 2}
+\fecha{15 / 11 / 2013}
+\materia{Bases De Datos}
+\grupo{Grupo 4}
+\integrante{Carreiro, Martin}{45/10}{martin301290@gmail.com}
+\integrante{Kujawski, Kevin}{459/10}{kevinkuja@gmail.com}
+\integrante{Ortiz De Zarate, Juan Manuel}{403/10}{jmanuoz@gmail.com}
+\integrante{Teren, Leonardo}{332/09}{lteren@gmail.com}
+
+\begin{document} % Todo lo que escribamos a partir de aca va a aparecer en el documento.
+
+\maketitle
+
+\section{Codigo}
+
+\input{introduccion}
+
+\input{lru}
+
+\newpage
+
+\input{mru}
+
+\newpage
+
+\input{touchcount}
+
+\end{document} %Terminé!
