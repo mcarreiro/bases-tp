@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.10)  13 NOV 2013 16:17
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.10)  13 NOV 2013 16:32
 entering extended mode
  %&-line parsing enabled.
 **informe.tex
@@ -454,35 +454,50 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--38
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </home/mcarreiro/Documents/
 texmf/logo_dc.jpg> </home/mcarreiro/Documents/texmf/logo_uba.jpg>]
 (./introduccion.tex) (./lru.tex [2]) [3] (./mru.tex [4]) [5] (./touchcount.tex
-Overfull \hbox (13.216pt too wide) in paragraph at lines 17--19
+Underfull \hbox (badness 10000) in paragraph at lines 9--12
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+
+ []
+
+
+Overfull \hbox (13.216pt too wide) in paragraph at lines 27--29
 [][][][][][][][][][][][][][][]  
  []
 
 [6]
-Overfull \hbox (13.216pt too wide) in paragraph at lines 69--71
+Overfull \hbox (13.216pt too wide) in paragraph at lines 79--81
 [][][][][][][][][][][][][][][]  
  []
 
-[7]) [8] (./informe.aux) ) 
+[7]) [8] (./comparaciones.tex) [9] (./informe.aux) ) 
 Here is how much of TeX's memory you used:
- 4046 strings out of 495061
- 51617 string characters out of 1182621
- 177798 words of memory out of 3000000
- 7199 multiletter control sequences out of 15000+50000
+ 4050 strings out of 495061
+ 51674 string characters out of 1182621
+ 179798 words of memory out of 3000000
+ 7200 multiletter control sequences out of 15000+50000
  6232 words of font info for 23 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 32i,8n,40p,221b,1581s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.
-pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/t
-ype1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmtt10.pfb>
-Output written on informe.pdf (8 pages, 491822 bytes).
+ 32i,8n,40p,500b,1581s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/
+public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/s
+hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-
+texlive/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on informe.pdf (9 pages, 493946 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
+ 66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
