@@ -35,4 +35,8 @@ public class FIFOReplacementStrategy implements PageReplacementStrategy
 	{
 		return new FIFOBufferFrame(page);
 	}
+	
+	public String toString() {
+        return "FIFO Replacement Strategy";
+    }
 }

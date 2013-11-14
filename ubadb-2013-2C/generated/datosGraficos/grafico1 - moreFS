@@ -1,0 +1,50 @@
+File generated/1-moreFileScanToMixed/mixedTrace generated
+traceFileName: generated/1-moreFileScanToMixed/mixedTrace
+BufferSize: 200
+FIFO Replacement StrategyHit rate: 0.06927354731357008
+MRU Replacement StrategyHit rate: 0.178350921749792
+LRU Replacement StrategyHit rate: 0.07194465122389106
+Touch Count Replacement StrategyHit rate: 0.1822043175548452
+
+BufferSize: 250
+FIFO Replacement StrategyHit rate: 0.08258527827648116
+MRU Replacement StrategyHit rate: 0.22358453387047336
+LRU Replacement StrategyHit rate: 0.09900599903665105
+Touch Count Replacement StrategyHit rate: 0.22866401015895257
+
+BufferSize: 300
+FIFO Replacement StrategyHit rate: 0.09453956298988483
+MRU Replacement StrategyHit rate: 0.266497350790384
+LRU Replacement StrategyHit rate: 0.10807023689626484
+Touch Count Replacement StrategyHit rate: 0.26767964268511624
+
+BufferSize: 350
+FIFO Replacement StrategyHit rate: 0.15334763760563996
+MRU Replacement StrategyHit rate: 0.31050488242763935
+LRU Replacement StrategyHit rate: 0.11928011560187415
+Touch Count Replacement StrategyHit rate: 0.30831545299295005
+
+traceFileName: generated/1-moreFileScanToMixed/randomFileScanRandom - Graf 1.trace
+BufferSize: 200
+FIFO Replacement StrategyHit rate: 0.4662685603615236
+MRU Replacement StrategyHit rate: 0.42843770174306006
+LRU Replacement StrategyHit rate: 0.44286636539703034
+Touch Count Replacement StrategyHit rate: 0.3736604260813428
+
+BufferSize: 250
+FIFO Replacement StrategyHit rate: 0.5623628147191737
+MRU Replacement StrategyHit rate: 0.5577469335054874
+LRU Replacement StrategyHit rate: 0.5819883795997418
+Touch Count Replacement StrategyHit rate: 0.5590058102001291
+
+BufferSize: 300
+FIFO Replacement StrategyHit rate: 0.6619109102646868
+MRU Replacement StrategyHit rate: 0.6726597805035507
+LRU Replacement StrategyHit rate: 0.6610716591349257
+Touch Count Replacement StrategyHit rate: 0.7289541639767592
+
+BufferSize: 350
+FIFO Replacement StrategyHit rate: 0.7987411233053583
+MRU Replacement StrategyHit rate: 0.7999354422207876
+LRU Replacement StrategyHit rate: 0.7489347966429954
+Touch Count Replacement StrategyHit rate: 0.8554874112330536

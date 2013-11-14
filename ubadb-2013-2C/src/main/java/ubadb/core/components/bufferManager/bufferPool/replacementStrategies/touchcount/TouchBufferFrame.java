@@ -17,14 +17,10 @@ public class TouchBufferFrame extends BufferFrame implements Comparable<TouchBuf
                 lastTouch = new Date();
         }
         
-        public void pin(){
-        	super.pin();
-        	increaseCount();
-        }
         
         public void unpin() throws BufferFrameException{
         	super.unpin();
-        	increaseCount();
+        	increaseCount();//Contamos solo cuando unpinean, si no cuenta más veces
         }
         
         public void increaseCount(){
@@ -33,15 +29,19 @@ public class TouchBufferFrame extends BufferFrame implements Comparable<TouchBuf
         	@SuppressWarnings("unused")
 			long difference = (long) ((now.getTime() - lastTouch.getTime())/1000);
         	
-        	if((now.getTime() - lastTouch.getTime())/1000 >= 3){
-        		count++;
+//        	if((now.getTime() - lastTouch.getTime())/1000 > 0){
+        		++count;
         		lastTouch = new Date();
-        	}
+//        	}
         }
 
 		@Override
 		public int compareTo(TouchBufferFrame arg0) {
 			return count.compareTo(((TouchBufferFrame)arg0).count);
+		}
+		
+		public String toString(){
+			return Integer.toString(getPinCount());
 		}
 
 }

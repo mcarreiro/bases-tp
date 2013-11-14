@@ -18,8 +18,8 @@ public class MainTraceGenerator
 {
 	public static void main(String[] args) throws Exception
 	{
-//		basicDataSet();
-		complexDataSet();
+		basicDataSet();
+//		complexDataSet();
 	}
 	
 	private static void basicDataSet() throws Exception
@@ -109,7 +109,7 @@ public class MainTraceGenerator
 		mixTraces(fileE,folderE,100,5,serializer);
 	}
 
-	private static void mixTraces(String fileNameForNewTrace, String folderName, int totalTracesCount, int maxConcurrentTracesCount, PageReferenceTraceSerializer serializer) throws Exception
+	public static void mixTraces(String fileNameForNewTrace, String folderName, int totalTracesCount, int maxConcurrentTracesCount, PageReferenceTraceSerializer serializer) throws Exception
 	{
 		List<PageReferenceTrace> tracesToMix = buildTracesToMix(folderName,totalTracesCount,serializer);
 		
@@ -119,7 +119,7 @@ public class MainTraceGenerator
 		System.out.println("File " + fileNameForNewTrace + " generated");
 	}
 
-	private static List<PageReferenceTrace> buildTracesToMix(String folderName, int totalTracesCount, PageReferenceTraceSerializer serializer) throws Exception
+	public static List<PageReferenceTrace> buildTracesToMix(String folderName, int totalTracesCount, PageReferenceTraceSerializer serializer) throws Exception
 	{
 		List<PageReferenceTrace> tracesToMix = new ArrayList<>();
 		Random random = new Random(System.currentTimeMillis());
