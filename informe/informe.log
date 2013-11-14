@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.10)  13 NOV 2013 16:32
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.10.6)  14 NOV 2013 15:37
 entering extended mode
  %&-line parsing enabled.
 **informe.tex
@@ -46,7 +46,8 @@ Package ifvtex Info: VTeX not detected.
 \Gm@odd@mp=\dimen105
 \Gm@even@mp=\dimen106
 \Gm@dimlist=\toks15
-)
+
+(/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg))
 (/usr/share/texmf-texlive/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
 
@@ -287,8 +288,7 @@ Now handling font encoding U ...
    defining Unicode char U+2026 (decimal 8230)
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
-))
-(/home/mcarreiro/Documents/texmf/caratula.sty
+)) (./caratula.sty
 Package: caratula 2005/08/09 v0.4 Para componer caratulas de TPs del DC
 
 (/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
@@ -442,7 +442,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 38.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 38.
-<logo_uba.jpg, id=2, 225.4824pt x 231.7458pt>
+<logo_uba.jpg, id=2, 144.54pt x 148.6353pt>
 File: logo_uba.jpg Graphic file (type jpg)
  <use logo_uba.jpg>
 Underfull \hbox (badness 10000) in paragraph at lines 38--38
@@ -451,53 +451,69 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--38
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </home/mcarreiro/Documents/
-texmf/logo_dc.jpg> </home/mcarreiro/Documents/texmf/logo_uba.jpg>]
-(./introduccion.tex) (./lru.tex [2]) [3] (./mru.tex [4]) [5] (./touchcount.tex
-Underfull \hbox (badness 10000) in paragraph at lines 9--12
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logo_dc.jpg> <./logo_uba
+.jpg>] (./introduccion.tex) (./lru.tex [2]) [3] (./mru.tex [4]) [5]
+(./touchcount.tex
+Underfull \hbox (badness 10000) in paragraph at lines 23--26
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--17
+Underfull \hbox (badness 10000) in paragraph at lines 29--31
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 20--22
+Underfull \hbox (badness 10000) in paragraph at lines 34--36
 
  []
 
 
-Overfull \hbox (13.216pt too wide) in paragraph at lines 27--29
+Overfull \hbox (13.216pt too wide) in paragraph at lines 41--43
 [][][][][][][][][][][][][][][]  
  []
 
 [6]
-Overfull \hbox (13.216pt too wide) in paragraph at lines 79--81
+Overfull \hbox (13.216pt too wide) in paragraph at lines 93--95
 [][][][][][][][][][][][][][][]  
  []
 
-[7]) [8] (./comparaciones.tex) [9] (./informe.aux) ) 
+[7]) [8] (./comparaciones.tex <grafico1-1.png, id=37, 602.25pt x 372.39125pt>
+File: grafico1-1.png Graphic file (type png)
+
+<use grafico1-1.png> <grafico1-2.png, id=38, 602.25pt x 372.39125pt>
+File: grafico1-2.png Graphic file (type png)
+
+<use grafico1-2.png> <grafico2-1.png, id=39, 602.25pt x 372.39125pt>
+File: grafico2-1.png Graphic file (type png)
+
+<use grafico2-1.png> [9 <./grafico1-1.png (PNG copy)> <./grafico1-2.png (PNG co
+py)>] <grafico2-2.png, id=43, 602.25pt x 372.39125pt>
+File: grafico2-2.png Graphic file (type png)
+ <use grafico2-2.png>
+<grafico3.png, id=44, 602.25pt x 372.39125pt>
+File: grafico3.png Graphic file (type png)
+ <use grafico3.png> [10 <./grafico2-1.png (PNG copy)> <./grafico2-2.png (PNG co
+py)>]) [11 <./grafico3.png (PNG copy)>] (./informe.aux) ) 
 Here is how much of TeX's memory you used:
- 4050 strings out of 495061
- 51674 string characters out of 1182621
- 179798 words of memory out of 3000000
- 7200 multiletter control sequences out of 15000+50000
+ 4078 strings out of 495061
+ 52190 string characters out of 1182621
+ 177822 words of memory out of 3000000
+ 7220 multiletter control sequences out of 15000+50000
  6232 words of font info for 23 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 32i,8n,40p,500b,1581s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/f
-onts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/
-public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr1
-2.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/f
-onts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on informe.pdf (9 pages, 493946 bytes).
+ 32i,9n,40p,497b,1579s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texl
+ive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/t
+ype1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
+/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texl
+ive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on informe.pdf (11 pages, 399873 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
+ 77 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
