@@ -2,24 +2,15 @@
 
 \subsection{Motivación}
 
-Tanto la estrategia MRU como la LRU aplican un mal uso de la cache en los casos en que se realizan full scans de las tablas
-debido a que se cargan todos los bloques de estas en el buffer. Por ejemplo, si el buffer es de 500 bloques y la tabla contiene 600,
-todos los blques populares serán removidos y reemplazados con los bloques de esta tabla. Esto es sumamente contraproducente para la consistencia
-de la performance de la base de datos ya que fuerza un exceisvo uso del sistema y destruye una cache bien conformada.
-
-
-
-However, there is a cache killer called the full-table scan where each and every table block is
-placed into the buffer. If the buffer cache is 500 blocks and the table contains 600 blocks, all the
-popular blocks would be replaced with this full-table scanned table’s blocks. This is extremely
-disruptive to consistent database performance because it forces excessive computer system usage
-and basically destroys a well-developed cache.
-
-
-While this might seem like all our buffer cache problems are solved, think again. How about a
-large index range scan? Picture hundreds of index leaf blocks flowing into the buffer cache. The
-modified LRU algorithm only addresses full-table scan issues, not index block issues.
-
+Tanto la estrategia MRU como la LRU aplican un mal uso de la caché en los casos en que se realizan full scans de las tablas
+debido a que se cargan todos los bloques de éstas en el buffer. Por ejemplo, si el buffer es de 500 bloques y la tabla contiene 600,
+todos los bloques populares serán removidos y reemplazados con los bloques de esta tabla. Esto es sumamente contraproducente para la consistencia de la performance de la base de datos ya que fuerza un excesivo uso del sistema y destruye una cache bien conformada.
+\\
+Para solucionar este problema existe la famosa estrategia MLRU (modified least recently used). Esta lo que hace es ubicar los bloques
+leídos por un full-scan al final de la cola limitando, adicionalmente, la cantidad de bloques para ello.
+\\
+Sin embargo esta estrategia no funciona para index-scan y si debemos realizar dicho sobre un amplio rango volvemos al mismo problema. Para
+esto se pensó la estrategia Touch-Count, que será desarrollada a lo largo de esta sección.
 
 \subsection{Descripción}
 El algoritmo que utiliza Oracle para manejar las páginas del Buffer Pool es conocido
@@ -27,19 +18,19 @@ como “Touch Count” y es una variante del popular LRU.
 
 \subsubsection{Hot N Cold}
 
-Que significa\\
-Como se mantiene balanceado \\
-Como se crea\\
+Este algoritmo contiene una lista de buffers dividida en dos secciones, una denominada fría (cold) y otra caliente (hot), donde ambas tienen la misma cantidad de bloques (en caso de ser impar ésta, la zona fría tiene ese bloque de más)\\
+La idea es que esta lista se mantenga balanceada en base a cuántos accesos tuvo, manteniendo en la sección caliente los más "populares". \\
+Cada vez que se agrega un nuevo bloque a la lista, este se introduce en el medio, siempre en la parte fría. En caso de quedar esta con una diferencia mayor a 1 con respecto a la caliente se debe balancear nuevamente la lista.\\
 
-\subsubsection{Incremento Touch Count}
+\subsubsection{Increase Touch Count }
 
-Lo de los 3 segundos\\
-pin y unpin\\
+Los accesos a los bloques se contabilizan a través de un valor denominado "Touch Count" que en la práctica no es estrictamente la 
+cantidad de acccesos. Por ejemplo este valor sólo puede ser actualizado una vez cada 3 segundos para no sobrecargar los accesos a memoria y también por practicidad el valor sólo es incrementando en el unpin (cuando se "suelta" el bloque), porque sino estarían duplicados innecesariamente. Además estos valores son "reseteados" cuando un bloque se mueve de zona.\\
+
 
 \subsubsection{Hot N Cold Movement}
 
-Si es mayor a 2\\
-Mantener balanceo\\
+Un bloque pasa de la zona fría a la caliente y su Touch Count se reinicia a 0 cuando éste es mayor a 2 (o durante un balanceo como se mencionó anteriormente). Además el último bloque hot también es movido y su Touch Count pasa a 1.\\
 
 \subsection{Implementación}
 \subsubsection{Touch Count Buffer Frame}
@@ -104,31 +95,35 @@ import java.util.LinkedList;
 
 import ubadb.core.common.Page;
 import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
-import ubadb.core.components.bufferManager.bufferPool.
-	replacementStrategies.PageReplacementStrategy;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.exceptions.PageReplacementStrategyException;
 
 public class TouchCountReplacementStrategy implements PageReplacementStrategy {
 
 		private LinkedList<TouchBufferFrame> cold;
 		private LinkedList<TouchBufferFrame> hot;
-	
+		
+		public TouchCountReplacementStrategy(){
+			cold = new LinkedList<TouchBufferFrame>();
+			hot = new LinkedList<TouchBufferFrame>();
+		}
+		
         public BufferFrame findVictim(Collection<BufferFrame> bufferFrames) throws PageReplacementStrategyException {
-       		
-        		hotNColdMovement();
+        		hotNColdMovement(); // Mover según parámetro del paper.
         		
         		TouchBufferFrame victim = firstColdFrame();
                 return victim;
         }
         
+        //Devuelvo el primer COLD Frame reemplazable
         private TouchBufferFrame firstColdFrame() throws PageReplacementStrategyException{
         	for (TouchBufferFrame bufferFrame : cold) {
         		if (bufferFrame.canBeReplaced()){
         			cold.remove(bufferFrame);
         			
-        			if(Math.abs(cold.size() - hot.size())>0){ 
-        				cold.addLast(hot.removeLast());
-        			}
+        			if(Math.abs(cold.size() - hot.size())>0){ //Si HOT es más grande
+        				cold.addLast(hot.removeLast()); //Mantener balanceo
+        			}//Si no, es que son iguales. No puede haber más de 1 de diferencia
         			
         			return bufferFrame;
         		}
@@ -136,36 +131,48 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         	throw new PageReplacementStrategyException("No hay Cold Buffer reemplazable");
         }
         
+        //Una vez que tengamos cold y hoy, pasar de cold a hot según parámetro del paper
         private void hotNColdMovement(){
+			LinkedList<TouchBufferFrame> coldToRemove = new LinkedList<TouchBufferFrame>();
+			LinkedList<TouchBufferFrame> hotToRemove = new LinkedList<TouchBufferFrame>();
         	for(TouchBufferFrame bufferFrame : cold){
-        		if(bufferFrame.count > 2 ){ 
-        			bufferFrame.count = 0;
-        			hot.addFirst(bufferFrame);
-        			cold.remove(bufferFrame);
-        			cold.addLast(hot.removeLast()); 
-        		}
+        		if(bufferFrame.count >= 2 ){ // Dato del paper
+        			bufferFrame.count = 0; //Se tiene que resetear
+        			
+        			coldToRemove.addLast(bufferFrame);
+        			
+        			TouchBufferFrame toColdToMantainBalanceFrame = hot.removeLast();
+					toColdToMantainBalanceFrame.count = 1; //Si no en la proxima iteracion lo va a mandar a Hot de vuelta
+					hotToRemove.addLast(toColdToMantainBalanceFrame); //Mantener balanceo
+        		}  		
         	}
         	
+    		//Elimino los que tienen count>2 de cold
+    		cold.removeAll(coldToRemove);
+    		//Concateno de forma tal que quede al principio coldToRemove y después hot
+    		coldToRemove.addAll(hot);
+    		//Hot es esta nueva lista
+    		hot = coldToRemove;
+    		
+    		//MantenerBalanceo agregando los que saqué de Hot al final de cold 
+    		cold.addAll(hotToRemove);
         }
-        
 
         public BufferFrame createNewFrame(Page page) {
         	TouchBufferFrame bufferFrame = new TouchBufferFrame(page);
         	
         	cold.addFirst(bufferFrame);
         	
-        	if (cold.size() >= 2){ 
-        		TouchBufferFrame coldToHodFrame = cold.pop();
+        	if (Math.abs(cold.size() - hot.size())>1){ //Mantener balanceo, máxima diferencia 1
+        		TouchBufferFrame coldToHodFrame = cold.removeLast();
         		hot.addLast(coldToHodFrame);
         	}
         	
         	return bufferFrame;     
-        	
         }
         
         public String toString() {
-                return "Touch Count Replacement Strategy";
+            return "Touch Count Replacement Strategy";
         }
-        
 }
 \end{lstlisting}
