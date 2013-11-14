@@ -2,6 +2,13 @@
 
 \subsection{Motivación}
 
+Tanto la estrategia MRU como la LRU aplican un mal uso de la cache en los casos en que se realizan full scans de las tablas
+debido a que se cargan todos los bloques de estas en el buffer. Por ejemplo, si el buffer es de 500 bloques y la tabla contiene 600,
+todos los blques populares serán removidos y reemplazados con los bloques de esta tabla. Esto es sumamente contraproducente para la consistencia
+de la performance de la base de datos ya que fuerza un exceisvo uso del sistema y destruye una cache bien conformada.
+
+
+
 However, there is a cache killer called the full-table scan where each and every table block is
 placed into the buffer. If the buffer cache is 500 blocks and the table contains 600 blocks, all the
 popular blocks would be replaced with this full-table scanned table’s blocks. This is extremely
