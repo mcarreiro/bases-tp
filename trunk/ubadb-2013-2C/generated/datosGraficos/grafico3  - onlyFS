@@ -1,0 +1,25 @@
+File generated/3 - onlyFileScanToMixed/mixedTrace generated
+traceFileName: generated/3 - onlyFileScanToMixed/mixedTrace
+BufferSize: 50
+FIFO Replacement StrategyHit rate: 0.018447348193697154
+MRU Replacement StrategyHit rate: 0.04657955418908532
+LRU Replacement StrategyHit rate: 0.015449654112221368
+Touch Count Replacement StrategyHit rate: 0.0447348193697156
+
+BufferSize: 100
+FIFO Replacement StrategyHit rate: 0.0787086856264412
+MRU Replacement StrategyHit rate: 0.09223674096848578
+LRU Replacement StrategyHit rate: 0.056648731744811685
+Touch Count Replacement StrategyHit rate: 0.09477325134511914
+
+BufferSize: 150
+FIFO Replacement StrategyHit rate: 0.1983858570330515
+MRU Replacement StrategyHit rate: 0.13781706379707917
+LRU Replacement StrategyHit rate: 0.11714066102997694
+Touch Count Replacement StrategyHit rate: 0.1439661798616449
+
+BufferSize: 200
+FIFO Replacement StrategyHit rate: 0.15335180055401662
+MRU Replacement StrategyHit rate: 0.1664819944598338
+LRU Replacement StrategyHit rate: 0.13722991689750694
+Touch Count Replacement StrategyHit rate: 0.18121883656509696

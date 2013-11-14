@@ -1,5 +1,19 @@
 \section{Touch Count}
 
+\subsection{Motivación}
+
+However, there is a cache killer called the full-table scan where each and every table block is
+placed into the buffer. If the buffer cache is 500 blocks and the table contains 600 blocks, all the
+popular blocks would be replaced with this full-table scanned table’s blocks. This is extremely
+disruptive to consistent database performance because it forces excessive computer system usage
+and basically destroys a well-developed cache.
+
+
+While this might seem like all our buffer cache problems are solved, think again. How about a
+large index range scan? Picture hundreds of index leaf blocks flowing into the buffer cache. The
+modified LRU algorithm only addresses full-table scan issues, not index block issues.
+
+
 \subsection{Descripción}
 El algoritmo que utiliza Oracle para manejar las páginas del Buffer Pool es conocido
 como “Touch Count” y es una variante del popular LRU.
