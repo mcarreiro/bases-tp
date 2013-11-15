@@ -109,7 +109,7 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
 		}
 		
         public BufferFrame findVictim(Collection<BufferFrame> bufferFrames) throws PageReplacementStrategyException {
-        		hotNColdMovement(); // Mover según parámetro del paper.
+        		hotNColdMovement(); // Mover segun parametro del paper.
         		
         		TouchBufferFrame victim = firstColdFrame();
                 return victim;
@@ -121,9 +121,9 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         		if (bufferFrame.canBeReplaced()){
         			cold.remove(bufferFrame);
         			
-        			if(Math.abs(cold.size() - hot.size())>0){ //Si HOT es más grande
+        			if(Math.abs(cold.size() - hot.size())>0){ //Si HOT es mzs grande
         				cold.addLast(hot.removeLast()); //Mantener balanceo
-        			}//Si no, es que son iguales. No puede haber más de 1 de diferencia
+        			}//Si no, es que son iguales. No puede haber mas de 1 de diferencia
         			
         			return bufferFrame;
         		}
@@ -131,7 +131,7 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         	throw new PageReplacementStrategyException("No hay Cold Buffer reemplazable");
         }
         
-        //Una vez que tengamos cold y hoy, pasar de cold a hot según parámetro del paper
+        //Una vez que tengamos cold y hoy, pasar de cold a hot segun parametro del paper
         private void hotNColdMovement(){
 			LinkedList<TouchBufferFrame> coldToRemove = new LinkedList<TouchBufferFrame>();
 			LinkedList<TouchBufferFrame> hotToRemove = new LinkedList<TouchBufferFrame>();
@@ -149,12 +149,12 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         	
     		//Elimino los que tienen count>2 de cold
     		cold.removeAll(coldToRemove);
-    		//Concateno de forma tal que quede al principio coldToRemove y después hot
+    		//Concateno de forma tal que quede al principio coldToRemove y despues hot
     		coldToRemove.addAll(hot);
     		//Hot es esta nueva lista
     		hot = coldToRemove;
     		
-    		//MantenerBalanceo agregando los que saqué de Hot al final de cold 
+    		//MantenerBalanceo agregando los que saque de Hot al final de cold 
     		cold.addAll(hotToRemove);
         }
 
@@ -163,7 +163,7 @@ public class TouchCountReplacementStrategy implements PageReplacementStrategy {
         	
         	cold.addFirst(bufferFrame);
         	
-        	if (Math.abs(cold.size() - hot.size())>1){ //Mantener balanceo, máxima diferencia 1
+        	if (Math.abs(cold.size() - hot.size())>1){ //Mantener balanceo, maxima diferencia 1
         		TouchBufferFrame coldToHodFrame = cold.removeLast();
         		hot.addLast(coldToHodFrame);
         	}
